@@ -1,0 +1,11 @@
+Model Information:
+* title:	Taj Mahal Lego set
+* source:	https://sketchfab.com/3d-models/taj-mahal-lego-set-14eb4ed6307f42be9da1865ece45d6df
+* author:	Christian Camelo (https://sketchfab.com/christiances)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Taj Mahal Lego set" (https://sketchfab.com/3d-models/taj-mahal-lego-set-14eb4ed6307f42be9da1865ece45d6df) by Christian Camelo (https://sketchfab.com/christiances) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

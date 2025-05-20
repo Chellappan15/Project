@@ -40,6 +40,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', (event) => {
             //localStorage.clear();
@@ -93,7 +94,9 @@
 
             // Lighting
 
-            camera.position.z = 5;
+            camera.position.z = 10;
+            camera.position.x = -6;
+            camera.position.y = 20;
 
             // Controls
             controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -111,24 +114,32 @@
             scene.add(pointLight);
             
             // Initial model load
-            loadModel('/models/Taj Mahal2.glb');
+            loadModel('/models/taj_mahal_lego_set/scene.gltf');
         }
 
         function loadModel(modelPath) {
-
-
             if (model) {
                 scene.remove(model);
             }
-
 
             const loader = new THREE.GLTFLoader();
 
             loader.load(modelPath, (gltf) => {
                 model = gltf.scene;
-                model.position.set(0, 0, 0); // Center the model
-                model.scale.set(1, 1, 1); // Adjust the scale if needed
+                model.position.set(0, 0, 0); // Reset to origin
+                model.scale.set(1, 1, 1); // Adjust scale as needed
+
                 scene.add(model);
+
+                // Compute model's bounding box to find its center
+                const box = new THREE.Box3().setFromObject(model);
+                const center = new THREE.Vector3();
+                box.getCenter(center);
+
+                // Set controls target to model's center
+                controls.target.copy(center);
+                controls.update();
+
                 render();
             }, undefined, (error) => {
                 console.error('An error occurred while loading the model:', error);
