@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Now</title>
+  <!-- <link rel="stylesheet" href="styles.css"> -->
+   <style>
+    /* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #e3f2fd;
+  color: #333;
+}
+
+header {
+  background: #007bff;
+  color: white;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+header button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+header h1 {
+  font-size: 22px;
+  margin: 0;
+  text-align: center;
+  flex-grow: 1;
+}
+
+footer {
+  background: #007bff;
+  color: white;
+  text-align: center;
+  /* padding: 12px; */
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+main {
+  padding-bottom: 60px; /* Ensure space for the footer */
+}
+
+/* Booking Form Styles */
+.booking-form {
+  margin: 15px;
+  padding: 15px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.booking-form h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.booking-form label {
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.booking-form input,
+.booking-form select,
+.booking-form textarea {
+  width: 98%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.booking-form input:focus,
+.booking-form select:focus,
+.booking-form textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+}
+
+.booking-form .submit-btn {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  display: block;
+  width: 100%;
+  margin-bottom: 20px; /* Added margin to prevent overlap with footer */
+}
+
+.booking-form .submit-btn:hover {
+  background: #0056b3;
+}
+
+/* Guide Selection */
+.booking-form h4 {
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+.booking-form input[type="radio"] {
+  display: none;
+}
+
+.booking-form input[type="radio"] + label {
+  display: inline-block;
+  background: #f8f9fa;
+  border: 2px solid #007bff;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin: 5px;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.booking-form input[type="radio"]:checked + label {
+  background: #007bff;
+  color: white;
+  border-color: #0056b3;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .booking-form {
+    margin: 10px;
+    padding: 10px;
+  }
+
+  .booking-form h2 {
+    font-size: 18px;
+  }
+
+  .booking-form label {
+    font-size: 13px;
+  }
+
+  .booking-form input,
+  .booking-form select,
+  .booking-form textarea {
+    width: 95%;
+    font-size: 13px;
+  }
+
+  .booking-form .submit-btn {
+    font-size: 13px;
+    padding: 8px 12px;
+  }
+}
+   </style>
+</head>
+<body>
+  <header>
+    <button id="back-button">← Back</button>
+    <h1>Book Your Stay</h1>
+  </header>
+
+  <main>
+    <section class="booking-form">
+      <h2>Booking Form</h2>
+      <form id="bookNowForm" method="POST" action="/Booked">
+        <!-- Guest Information -->
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+
+        <!-- Stay Details -->
+        <label for="checkin">Check-In Date</label>
+        <input type="date" id="checkin" name="checkin" required>
+
+        <label for="checkout">Check-Out Date</label>
+        <input type="date" id="checkout" name="checkout" required>
+
+        <label for="room">Room Type</label>
+        <select id="room" name="room" required>
+          <option value="" disabled selected>Select room type</option>
+          <option value="single">Single Room</option>
+          <option value="double">Double Room</option>
+          <option value="suite">Suite</option>
+        </select>
+
+        <h4>Need a guide?</h4>
+        <label>Choose from our guides available for this monument</label>
+        <input type="radio" name="guide" value="Navin.B" id="guide1">
+        <label for="guide1">Navin.B</label>
+        <input type="radio" name="guide" value="Gokul.J" id="guide2">
+        <label for="guide2">Gokul.J</label>    
+        <p>Per Day Their Price will be ₹1000.</p> 
+        <label for="days">Number Of Days Their Support Will be Needed.</label>
+        <input type="number" name="days" value="0" id="days_req">   
+        <!-- Additional Requests -->
+        <label for="requests">Special Requests</label>
+        <textarea id="requests" name="requests" placeholder="Enter any special requests (optional)"></textarea>
+
+        <!-- Submit -->
+        <button type="submit" id="submit-btn" class="submit-btn">Book Now</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2024 Hotel Sunrise. All rights reserved.</p>
+  </footer>
+  <script src="https://js.stripe.com/v3/"></script>
+  <script>
+      const stripe = Stripe("pk_test_51Qk4j2BbnKsm3FnNutFGYJWySXLtomz1f3qDYDVyFChlxWiBc3R7OSvJQCYtDV1jDpuxikxlC3fgNo7PrxVUWsY800M2xzM2we");
+
+      document.getElementById("submit-btn").addEventListener("click", async function (event) {
+          event.preventDefault();
+
+          const form = document.getElementById("bookNowForm");
+          const formData = new FormData(form);
+          let details = {};
+
+          for (const [key, value] of formData.entries()) {
+              details[key] = value;
+          }
+
+          console.log(details);
+
+          fetch('http://localhost:8080/TajMahal/Amenities/Hotel/Form', { 
+              method: 'POST', 
+              headers: { 'Content-Type': 'application/json' }, 
+              body: JSON.stringify(details)
+          })
+          .then(res => res.json())
+          .then(session => {
+              return stripe.redirectToCheckout({ sessionId: session.sessionId });
+          })
+          .catch(error => {
+              console.error("Error:", error);
+              alert("Failed to initiate payment.");
+          });
+      });
+  </script>
+</body>
+</html>

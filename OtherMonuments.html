@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation Page</title>
+    <style>
+        body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    gap: 20px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    height: 150px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.card img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+#img2{
+    width: 80px;
+    height: 80px;
+}
+
+#span1{
+    margin-top: 20px;
+}
+
+.card:hover {
+    background-color: #ddd;
+}
+
+    </style>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <a class="card" id="Gate">
+            <img src="https://img.icons8.com/?size=100&id=VDN4cZSoRz5o&format=png&color=000000">
+            <span id="span1">India Gate</span>
+        </a>
+    </div>
+    <script>
+        document.getElementById('Gate').addEventListener('click',()=>{
+            window.location.href = "/ExploreMonuments/IndiaGate";
+        })
+    </script>
+</body>
+</html>

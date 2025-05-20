@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taj Mahal Details</title>
+  <!-- <link rel="stylesheet" href="styles.css"> -->
+   <style>
+        body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #007bff;
+      color: #fff;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1rem;
+      padding: 0;
+    }
+
+    .nav-links li a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .monument-image {
+      width: 90%;
+      max-width: 350px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .monument-name {
+      margin-top: 0.5rem;
+      font-size: 1.6rem;
+      color: #333;
+    }
+
+    .monument-description {
+      font-size: 1rem;
+      color: #555;
+      text-align: center;
+    }
+
+    .monument-description .highlight {
+      font-weight: bold;
+      color: #007bff;
+    }
+
+    #form {
+      margin-top: 20px;
+      width: 150px;
+      height: 40px;
+      font-size: 1rem;
+      border-radius: 50px;
+      border: 2px solid black;
+      background: white;
+      cursor: pointer;
+    }
+
+    #form:hover {
+      background: #007bff;
+      color: white;
+    }
+
+    .ar-logo {
+      margin-top: 15px;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+    }
+
+    footer {
+      background: #007bff;
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+      font-size: 1rem;
+      margin-top: auto;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .nav-links {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+    }
+
+    @media (max-width: 425px) {
+      .monument-image {
+        max-width: 250px;
+      }
+
+      .monument-name {
+        font-size: 1.3rem;
+      }
+    }
+   </style>
+</head>
+<body>
+  <header>
+    <div class="logo">AR Explorer</div>
+    <nav>
+      <ul class="nav-links">
+        <li><a id="Home">Home</a></li>
+        <!-- <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li> -->
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="monument-details">
+      <img src="Monument.png" alt="Taj Mahal" class="monument-image">
+      <div id="AR">
+        <img src="AR.png" id="ARIcon">
+      </div>
+      <h2 class="monument-name">Taj Mahal</h2>
+      <audio autoplay src="synthesize.mp3" type="mp3"></audio>
+      <p class="monument-description">
+        The Taj Mahal is an iconic monument of love and one of the Seven Wonders of the World. Located in Agra, India, it was built by Emperor Shah Jahan in memory of his beloved wife Mumtaz Mahal. This white marble mausoleum is renowned for its stunning architecture and intricate craftsmanship.
+      </p>
+    </div>
+    <button id="form">Want To Visit?</button>
+  </main>
+
+  <footer>
+    <p>AR Explorer.</p>
+  </footer>
+  <script>
+    document.getElementById('Home').addEventListener('click',()=>{
+      window.location.href = '/';
+    });
+    document.getElementById('ARIcon').addEventListener('click',()=>{
+      window.location.href = '/TajMahal/TajMahalARView';
+    });
+    document.getElementById('form').addEventListener('click',()=>{
+      window.location.href = '/TajMahal/Amenities'
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amenities Page</title>
+  <!-- <link rel="stylesheet" href="public/Amenities.css"> -->
+<style>
+  body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f4;
+      color: #333;
+  }
+    
+  /* Header */
+  header {
+  background: #007bff;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  }
+
+  header button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  }
+
+  header h1 {
+  font-size: 20px;
+  flex-grow: 1;
+  text-align: center;
+  margin: 0;
+  }
+
+  /* Sections */
+  .section {
+  margin: 15px;
+  padding: 10px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .section h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  }
+
+  /* Carousel */
+  .carousel {
+  display: flex;
+  overflow-x: scroll;
+  gap: 10px;
+  }
+
+  .card {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  width: 200px;
+  text-align: center;
+  }
+
+  .card img {
+  width: 100%;
+  border-radius: 6px;
+  }
+
+  .details-btn {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin-top: 5px;
+  cursor: pointer;
+  border-radius: 4px;
+  }
+
+  /* List Items */
+  .list-item {
+  margin-bottom: 10px;
+  }
+
+  .list-item h3 {
+  font-size: 16px;
+  margin: 0;
+  }
+
+  /* Icons */
+  .icons {
+  display: flex;
+  gap: 10px;
+  font-size: 18px;
+  }
+
+  /* Footer */
+  footer {
+  background: #007bff;
+  color: white;
+  padding: 10px 0;
+  text-align: center;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  }
+
+  footer nav button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 14px;
+  margin: 0 10px;
+  cursor: pointer;
+  }
+
+  footer nav button.active {
+  font-weight: bold;
+  }
+
+  /* Car Rentals Section */
+  .car-rentals {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  }
+
+  .rental-card {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .rental-card h3 {
+  font-size: 16px;
+  margin: 0 0 5px;
+  }
+
+  .rental-card p {
+  font-size: 14px;
+  margin: 5px 0;
+  }
+
+  .rental-card .details-btn {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <button id="back-button">← Back</button>
+    <h1>Amenities</h1>
+  </header>
+
+  <main>
+    <!-- Section: Nearby Accommodations -->
+    <section class="section">
+      <h2>Stay Nearby</h2>
+      <div class="carousel">
+        <div class="card">
+          <img src="https://th.bing.com/th/id/OIP.G_mUnSeVmHaFi36SXO7swgHaFR?w=313&h=181&c=7&r=0&o=5&dpr=1.3&pid=1.7" alt="Hotel Image">
+          <h3>Hotel Sunrise</h3>
+          <p>Price: ₹₹₹</p>
+          <p>Rating: ⭐⭐⭐⭐ (120 reviews)</p>
+          <button class="details-btn" id="hotel">View Details</button>
+        </div>
+        <div class="card">
+          <img src="https://files.sitebuilder.name.tools/0b/bc/0bbc24d4-2b11-493c-b338-17d4b5dba385.jpg" alt="Hotel Image">
+          <h3>City Inn</h3>
+          <p>Price: ₹₹</p>
+          <p>Rating: ⭐⭐⭐⭐ (85 reviews)</p>
+          <button class="details-btn">View Details</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: Restaurants and Eateries -->
+    <section class="section">
+      <h2>Dine & Snack</h2>
+      <div class="list">
+        <div class="list-item">
+          <h3>Tandoori Palace</h3>
+          <p>Cuisine: Indian</p>
+          <p>Distance: 0.5 km</p>
+          <p>Rating: ⭐⭐⭐⭐ (95 reviews)</p>
+        </div>
+        <div class="list-item">
+          <h3>Burger Shack</h3>
+          <p>Cuisine: Fast Food</p>
+          <p>Distance: 0.8 km</p>
+          <p>Rating: ⭐⭐⭐⭐ (120 reviews)</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: Travel Facilities -->
+    <section class="section">
+      <h2>Car Rentals</h2>
+      <div class="car-rentals">
+        <div class="rental-card">
+          <h3>ZoomCar</h3>
+          <p>Self-drive cars starting at ₹150/hour.</p>
+          <p>Distance: 1.2 km away</p>
+          <!-- <button class="details-btn">Book Now</button> -->
+        </div>
+        <div class="rental-card">
+          <h3>Revv</h3>
+          <p>Flexible car subscriptions and rentals.</p>
+          <p>Distance: 2.5 km away</p>
+          <!-- <button class="details-btn">Book Now</button> -->
+        </div>
+        <div class="rental-card">
+          <h3>MyChoize</h3>
+          <p>Affordable rates for long trips.</p>
+          <p>Distance: 3.0 km away</p>
+          <!-- <button class="details-btn">Book Now</button> -->
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Section: Emergency Services -->
+    <section class="section">
+      <h2>In Case of Emergency</h2>
+      <ul>
+        <li>🏥 Nearest Hospital: City Care Hospital (1 km)</li>
+        <li>🚔 Police Station: Central Police Station (1.5 km)</li>
+        <li>🏧 ATM: SBI ATM (500 m)</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <nav>
+      <button>Home</button>
+      <button class="active">Amenities</button>
+      <button>AR View</button>
+      <button>Profile</button>
+    </nav>
+  </footer>
+  <script> 
+  document.getElementById('hotel').addEventListener('click', function() { window.location.href = '/TajMahal/Amenities/Hotel'; });
+  document.getElementById('back-button').addEventListener('click', function(){ window.location.href = '/TajMahal'}) 
+  </script>
+</body>
+</html>

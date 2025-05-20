@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AR Project</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #007bff;
+      color: #fff;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1rem;
+      padding: 0;
+    }
+
+    .nav-links li {
+      display: inline;
+    }
+
+    .nav-links li a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .monument {
+      margin: 1rem 0;
+    }
+
+    .monument-image {
+      width: 90%;
+      max-width: 350px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+    }
+
+    .monument-name {
+      margin-top: 0.5rem;
+      font-size: 1.6rem;
+      color: #333;
+    }
+
+    footer {
+      background: #007bff;
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+      font-size: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .nav-links {
+        flex-direction: column;
+        gap: 0.5rem;
+        padding-top: 0.5rem;
+      }
+    }
+
+    @media (max-width: 425px) {
+      .monument-image {
+        max-width: 250px;
+      }
+
+      .monument-name {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">AR Explorer</div>
+    <nav>
+      <ul class="nav-links">
+        <li><a id="Home">Home</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="monument">
+      <img src="Monument.png" alt="Monument" class="monument-image" id="TajMahal">
+      <h2 class="monument-name">Taj Mahal</h2>
+    </div>
+  </main>
+
+  <footer>
+    <p>AR Explorer</p>
+  </footer>
+
+  <script>
+    document.getElementById('Home').addEventListener('click', () => {
+      window.location.href = '/';
+    });
+
+    document.getElementById('TajMahal').addEventListener('click', () => {
+      window.location.href = "/TajMahal";
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Signup</title>
+    <style>
+        body { 
+            width: 100vw;
+            height: 100vh;
+            font-family: Arial, sans-serif; 
+            text-align: center; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+        }
+        .container { 
+            width: 300px; 
+            margin: auto; 
+            padding: 20px; 
+            border: 1px solid #ccc; 
+            border-radius: 5px; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        input { 
+            width: 98%; 
+            padding: 10px; 
+            margin: 5px 0; 
+        }
+        button { 
+            margin-top: 10px;
+            width: 98%; 
+            padding: 10px; 
+            background: blue; 
+            color: white; 
+            border: none; 
+            cursor: pointer; 
+        }
+        button:hover { 
+            background: darkblue; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        <input type="text" id="username" placeholder="Enter Username" required>
+        <input type="password" id="password" placeholder="Enter Password" required>
+        <button onclick="login()">Log In</button>
+        <p>Don't have an account? <a href="signup.html">Create Account</a></p>
+    </div>
+
+    <script>
+        function login() {
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+
+            if (username === 'Chellappan R' && password === 'welcome@123') {
+                alert("Login successful!");
+                window.location.href = "/Home";
+            } else {
+                alert("Invalid credentials or account does not exist!");
+            }
+        }
+    </script>
+</body>
+</html>

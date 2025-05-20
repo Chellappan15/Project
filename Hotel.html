@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hotel Details</title>
+  <style>
+    .hotel-images {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 20px auto;
+      text-align: center;
+    }
+
+    .hotel-images .main-image {
+      width: 50%;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .image-gallery {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .image-gallery img {
+      width: 245px;
+      height: 185px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .image-gallery img:hover {
+      transform: scale(1.05);
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #e3f2fd;
+      color: #333;
+    }
+
+    header {
+      background: #007bff;
+      color: white;
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    header button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    header h1 {
+      font-size: 22px;
+      margin: 0;
+      text-align: center;
+      flex-grow: 1;
+    }
+
+    .hotel-info, .hotel-amenities, .hotel-reviews {
+      margin: 15px;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .hotel-info h2, .hotel-amenities h2, .hotel-reviews h2 {
+      margin-top: 0;
+      color: #007bff;
+    }
+
+    .hotel-info .location {
+      font-size: 15px;
+      color: #555;
+      margin: 5px 0;
+    }
+
+    .hotel-info .description {
+      font-size: 15px;
+      line-height: 1.6;
+      margin: 10px 0;
+    }
+
+    .hotel-info .price {
+      font-weight: bold;
+      margin: 10px 0;
+      color: #007bff;
+    }
+
+    .hotel-info .book-btn {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .hotel-info .book-btn:hover {
+      background: #0056b3;
+    }
+
+    .hotel-amenities ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .hotel-amenities li {
+      margin: 8px 0;
+      font-size: 15px;
+    }
+
+    .hotel-reviews .review {
+      margin-bottom: 12px;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .hotel-reviews .review strong {
+      font-weight: bold;
+      color: #007bff;
+    }
+
+    footer {
+      background: #007bff;
+      color: white;
+      text-align: center;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <button id="back-button">← Back</button>
+    <h1>Hotel Details</h1>
+  </header>
+
+  <main>
+    <section class="hotel-images">
+      <img src="https://th.bing.com/th/id/OIP.G_mUnSeVmHaFi36SXO7swgHaFR?w=313&h=181&c=7&r=0&o=5&dpr=1.3&pid=1.7" alt="Hotel Main View" class="main-image">
+      <div class="image-gallery">
+        <img src="https://th.bing.com/th/id/OIP.VzYmeCAGW1KwUA9m0WUK7gHaHa?w=172&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7" alt="Room View">
+        <img src="https://th.bing.com/th/id/OIP.VHXtZJD48Ro6b-r1eNxDoAHaE7?w=234&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7" alt="Restaurant View">
+        <img src="https://th.bing.com/th/id/OIP.FCgo-uG1jtpwNsuZhZalnwAAAA?w=184&h=184&c=7&r=0&o=5&dpr=1.3&pid=1.7" alt="Pool View">
+      </div>
+    </section>
+
+    <section class="hotel-info">
+      <h2>Hotel Sunrise</h2>
+      <p class="location">📍 1.5 km from City Center</p>
+      <p class="description">
+        Experience luxury and comfort at Hotel Sunrise. Enjoy our modern rooms, exceptional service, 
+        and amenities like a rooftop pool, fine dining, and more.
+      </p>
+      <p class="price">💰 Price: ₹5,000/night</p>
+      <button class="book-btn" id="book-btn">Book Now</button>
+    </section>
+
+    <section class="hotel-amenities">
+      <h2>Amenities</h2>
+      <ul>
+        <li>🏊 Rooftop Pool</li>
+        <li>🍴 Fine Dining Restaurant</li>
+        <li>🚗 Free Parking</li>
+        <li>📶 Free Wi-Fi</li>
+        <li>🧺 Laundry Service</li>
+      </ul>
+    </section>
+
+    <section class="hotel-reviews">
+      <h2>Reviews</h2>
+      <div class="review">
+        <p>“Amazing service and facilities! The rooftop pool is a must-visit.”</p>
+        <p>– <strong>John Doe</strong></p>
+      </div>
+      <div class="review">
+        <p>“Perfect location and beautiful rooms. Highly recommend this hotel.”</p>
+        <p>– <strong>Jane Smith</strong></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2024 Hotel Sunrise. All rights reserved.</p>
+  </footer>
+  <script>
+    document.getElementById('back-button').addEventListener('click',function(){window.location.href = '/'});
+    document.getElementById('book-btn').addEventListener('click',function(){window.location.href = '/TajMahal/Amenities/Hotel/Form'});
+  </script>
+</body>
+</html>

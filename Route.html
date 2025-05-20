@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORS Route Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        button {
+            margin-top: 20px;
+            background-color: #4CAF50; /* Green background */
+            color: white; /* White text */
+            padding: 10px 20px; /* Padding for size */
+            border: none; /* No borders */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            font-size: 16px; /* Text size */
+        }
+
+            /* Hover Effect */
+        button:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+
+        #map { height: 90vh; width: 90%; }
+    </style>
+</head>
+<body>
+
+    <div id="map"></div>
+    <button id="Places">Places Nearby</button>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        const apiKey = "5b3ce3597851110001cf6248ba7712258c9e4addb2cf30c392e6bd97"; 
+
+        const start = [27.570039038522033, 80.09821878042321];
+        const end = [27.19786112480937, 78.03827530204798];
+
+        const map = L.map('map').setView(start, 12);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        L.marker(start).addTo(map).bindPopup("Start Location").openPopup();
+        L.marker(end).addTo(map).bindPopup("Destination");
+
+        const url = `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${apiKey}&start=${start[1]},${start[0]}&end=${end[1]},${end[0]}`;
+
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                console.log("ORS Response:", data);
+
+                if (!data.features || data.features.length === 0) {
+                    alert("No route found. Try different locations.");
+                    return;
+                }
+
+                const routeCoords = data.features[0].geometry.coordinates.map(coord => [coord[1], coord[0]]);
+                console.log("Processed Route Coordinates:", routeCoords);
+
+                if (routeCoords.length === 0) {
+                    alert("No valid route coordinates found.");
+                    return;
+                }
+
+                const routeLayer = L.polyline(routeCoords, { color: 'blue', weight: 4 }).addTo(map);
+                map.fitBounds(routeLayer.getBounds());
+            })
+            .catch(error => {
+                console.error("Error fetching route:", error);
+                alert("Failed to fetch the route. Check console for details.");
+            });
+
+            document.getElementById('Places').addEventListener('click',()=>{
+                window.location.href = "/Route/Location/Places"
+            })
+    </script>
+
+</body>
+</html>

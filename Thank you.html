@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      color: white;
+      text-align: center;
+    }
+
+    .thank-you-container {
+      width: 90%;
+      max-width: 400px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .thank-you-container h1 {
+      font-size: 2rem;
+      margin: 0;
+    }
+
+    .thank-you-container p {
+      font-size: 1rem;
+      margin: 10px 0 20px;
+    }
+
+    .thank-you-container .button {
+      display: inline-block;
+      padding: 12px 20px;
+      background: white;
+      color: #2575fc;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 8px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .thank-you-container .button:hover {
+      background: #2575fc;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="thank-you-container">
+    <h1>Thank You!</h1>
+    <p>We appreciate you using our services. Your satisfaction means everything to us.</p>
+    <a id="return" class="button">Return to Home</a>
+  </div>
+</body>
+<script>
+  document.getElementById('return').addEventListener('click',()=>{
+    window.location.href = '/Home';
+  });
+</script>
+</html>
