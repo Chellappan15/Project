@@ -97,6 +97,17 @@
         .left p{
           text-align: right;
         }
+
+        @media screen and (max-width: 480px) {
+            .container{
+                flex-direction: column;
+            }
+
+            .left{
+                border: 2px solid #ddd;
+                border-radius: 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -121,7 +132,7 @@
             </div>
             <h3>Gas</h3>
             <div class="place-card">
-                <span>📍 IndianOil - ₹500</span>
+                <span>📍 IndianOil - ₹1000</span>
                 <input type="checkbox" class="checkbox" data-cost="1000">
             </div>
             <h3>Hospitals</h3>
