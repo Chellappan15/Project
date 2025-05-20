@@ -3,14 +3,15 @@ const mongoose = require('mongoose');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const stripe = require('stripe')('sk_test_51Qk4j2BbnKsm3FnNNJ3uLsJ351dbfAQS0tpIlhWhUtU7th59Ugg6uOM9GBu7LVTDGccZnLQTuRU47WxbB9cBpPUw001O54l3rM');
+const env = require('dotenv').config();
 
 const server = express();
+const stripe = require('stripe')(process.env.Stripe_Key);
 server.use(cors());
 server.use(express.static(path.join(__dirname, 'public')));
 server.use(bodyParser.json()); 
 
-mongoose.connect("mongodb+srv://chellappan135:rfsRY6NFb7yHZwdU@hoteldetails.6ulel.mongodb.net/?retryWrites=true&w=majority&appName=HotelDetails", { dbName: "DetailsDB" })
+mongoose.connect(process.env.Mongo_Db, { dbName: "DetailsDB" })
     .then(() => console.log("Connected to MongoDB"))
     .catch(err => console.error("MongoDB connection error:", err));
 
@@ -138,8 +139,8 @@ server.post('/TajMahal/Amenities/Hotel/Form', async (req, res) => {
                 quantity: 1
             }],
             mode: 'payment',
-            success_url: `http://localhost:8080/payment-success?bookingId=${savedBooking._id}`,
-            cancel_url: 'http://localhost:8080/payment-failed'
+            success_url: `http://localhost:3000/payment-success?bookingId=${savedBooking._id}`,
+            cancel_url: 'http://localhost:3000/payment-failed'
         });
 
         res.json({ sessionId: session.id });
@@ -176,5 +177,5 @@ server.get('/fetch-all-bookings', async (req, res) => {
 });
 
 server.listen(3000, () => {
-    console.log('Server running on port 3030');
+    console.log('Server running on port 3000');
 });
