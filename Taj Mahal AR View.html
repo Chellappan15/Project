@@ -1,164 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AR Monument Viewer</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: black;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AR Monument Viewer</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: black;
+    }
 
-        #video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
+    #video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
 
-        #model-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-    </style>
+    #model-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    #toggle-camera {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 10;
+      padding: 10px 15px;
+      font-size: 16px;
+      background-color: rgba(255, 255, 255, 0.8);
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  </style>
 </head>
-
 <body>
-  <video id="video" autoplay playsinline></video>
-  <div id="model-container"></div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', (event) => {
-            //localStorage.clear();
-            const video = document.getElementById('video');
+<video id="video" autoplay playsinline muted></video>
+<div id="model-container"></div>
+<button id="toggle-camera">Switch Camera</button>
 
-            // Check if the browser supports media devices
-            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                navigator.mediaDevices.getUserMedia({
-                        video: {
-                            facingMode: "environment" // Use 'environment' for back camera
-                        }
-                    })
-                    .then(function(stream) {
-                        video.srcObject = stream;
-                        video.play();
-                    })
-                    .catch(function(err) {
-                        console.log("Error accessing the camera: " + err);
-                    });
-            } else {
-                console.log("Media devices not supported");
-            }
-        });
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
-        let scene, camera, renderer, model, controls;
+<script>
+  let currentFacingMode = 'environment'; // 'user' or 'environment'
+  let currentStream;
 
-        function init() {
-            // Scene setup
-            scene = new THREE.Scene();
-            camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 1000);
-            renderer = new THREE.WebGLRenderer({
-                antialias: true,
-                alpha: true
-            });
-            const ambientLight = new THREE.AmbientLight(0xffffff, 1); // Color and intensity
-            scene.add(ambientLight);
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
-            renderer.setClearColor(0x000000, 0); // Transparent background
-            document.getElementById('model-container').appendChild(renderer.domElement);
+  const video = document.getElementById('video');
+  const toggleButton = document.getElementById('toggle-camera');
 
-            // Camera feed background
-            const video = document.querySelector('video');
+  async function startCamera(facingMode = 'environment') {
+    if (currentStream) {
+      currentStream.getTracks().forEach(track => track.stop());
+    }
 
-            navigator.mediaDevices.getUserMedia({
-                video: true
-            }).then((stream) => {
-                video.srcObject = stream;
-                video.play();
-            });
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: { exact: facingMode } },
+        audio: false
+      });
 
-            // Lighting
+      currentStream = stream;
+      video.srcObject = stream;
+    } catch (err) {
+      console.error('Error accessing camera:', err);
+    }
+  }
 
-            camera.position.z = 10;
-            camera.position.x = -6;
-            camera.position.y = 20;
+  toggleButton.addEventListener('click', () => {
+    currentFacingMode = currentFacingMode === 'user' ? 'environment' : 'user';
+    startCamera(currentFacingMode);
+  });
 
-            // Controls
-            controls = new THREE.OrbitControls(camera, renderer.domElement);
-            controls.enableDamping = true;
-            controls.dampingFactor = 0.25;
-            controls.enableZoom = true; // Enable zoom
-            controls.enablePan = true; // Enable panning
+  document.addEventListener('DOMContentLoaded', () => {
+    startCamera(currentFacingMode);
+  });
 
-            light = new THREE.DirectionalLight(0xffffff, 1); // Increased intensity
-            light.position.set(1, 1, 1).normalize();
-            scene.add(light);
+  let scene, camera, renderer, model, controls;
 
-            const pointLight = new THREE.PointLight(0xffffff, 2, 50); // Color, intensity, and distance
-            pointLight.position.set(2, 2, 2);
-            scene.add(pointLight);
-            
-            // Initial model load
-            loadModel('/models/taj_mahal_lego_set/scene.gltf');
-        }
+  function init() {
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 1000);
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 
-        function loadModel(modelPath) {
-            if (model) {
-                scene.remove(model);
-            }
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+    scene.add(ambientLight);
 
-            const loader = new THREE.GLTFLoader();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setClearColor(0x000000, 0);
+    document.getElementById('model-container').appendChild(renderer.domElement);
 
-            loader.load(modelPath, (gltf) => {
-                model = gltf.scene;
-                model.position.set(0, 0, 0); // Reset to origin
-                model.scale.set(1, 1, 1); // Adjust scale as needed
+    // camera.position.z = 5;
+    
+    camera.position.z = 10;
+    camera.position.x = -6;
+    camera.position.y = 20;
 
-                scene.add(model);
+    controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.25;
+    controls.enableZoom = true;
+    controls.enablePan = true;
 
-                // Compute model's bounding box to find its center
-                const box = new THREE.Box3().setFromObject(model);
-                const center = new THREE.Vector3();
-                box.getCenter(center);
+    const dirLight = new THREE.DirectionalLight(0xffffff, 1);
+    dirLight.position.set(1, 1, 1).normalize();
+    scene.add(dirLight);
 
-                // Set controls target to model's center
-                controls.target.copy(center);
-                controls.update();
+    const pointLight = new THREE.PointLight(0xffffff, 2, 50);
+    pointLight.position.set(2, 2, 2);
+    scene.add(pointLight);
 
-                render();
-            }, undefined, (error) => {
-                console.error('An error occurred while loading the model:', error);
-            });
-        }
+    loadModel('/models/taj_mahal_lego_set/scene.gltf');
+  }
 
-        function render() {
-            requestAnimationFrame(render);
-            controls.update();
-            renderer.render(scene, camera);
-        }
+  function loadModel(modelPath) {
+    if (model) scene.remove(model);
 
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-        init();
-  </script>
+    const loader = new THREE.GLTFLoader();
+    loader.load(modelPath, (gltf) => {
+      model = gltf.scene;
+      model.position.set(0, 0, 0);
+      model.scale.set(1, 1, 1);
+      scene.add(model);
+
+      const box = new THREE.Box3().setFromObject(model);
+      const center = new THREE.Vector3();
+      box.getCenter(center);
+      controls.target.copy(center);
+      controls.update();
+
+      render();
+    }, undefined, (error) => {
+      console.error('Model load error:', error);
+    });
+  }
+
+  function render() {
+    requestAnimationFrame(render);
+    controls.update();
+    renderer.render(scene, camera);
+  }
+
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+
+  init();
+</script>
+
 </body>
-
 </html>
