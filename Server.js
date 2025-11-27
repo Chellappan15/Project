@@ -35,6 +35,23 @@ server.get('/', (req, res) => {
     res.status(200).sendFile(path.join(__dirname, 'Login Page.html'));
 });
 
+server.get('/Admin', (req,res) => {
+    res.status(200).sendFile(path.join(__dirname, 'Admin.html'));
+});
+
+server.get('/adminDetails', async(req, res) => {
+    const data = await Details.find();
+    return res.json({data});
+})
+
+server.get('/HotelAdmin', (req,res) => {
+    res.status(200).sendFile(path.join(__dirname, 'HotelAdmin.html'));
+});
+
+server.get('/GuideAdmin', (req,res) => {
+    res.status(200).sendFile(path.join(__dirname, 'GuideAdmin.html'));
+});
+
 server.get('/Home', (req,res) =>{
     res.status(200).sendFile(path.join(__dirname, 'Home.html'));
 })

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Hotel Admin</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', Arial, sans-serif;
+    }
+
+    body {
+        background: #eef2f7;
+        padding: 30px
+    }
+
+    .h1 {
+        font-size: 32px;
+        margin-bottom: 20px;
+        color: #333
+    }
+
+    /* --- Card Styles --- */
+    .card {
+        background: #fff;
+        padding: 25px;
+        border-radius: 14px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        margin-bottom: 25px;
+        border-left: 6px solid #6a4df7;
+        transition: all 0.3s ease;
+    }
+    
+    .card:hover {
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        transform: translateY(-2px);
+    }
+
+    .card h2 {
+        font-size: 24px;
+        color: #1c1c1c;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eee;
+    }
+
+    /* --- New Layout for Details using Flexbox --- */
+    .details-container {
+        display: flex;
+        flex-wrap: wrap; 
+        gap: 20px; 
+    }
+
+    .detail-item {
+        flex: 1 1 200px;
+        padding: 12px;
+        background: #f8faff;
+        border-radius: 8px;
+        border: 1px solid #e0e6ff;
+    }
+
+    .detail-label {
+        font-weight: 600;
+        font-size: 13px;
+        color: #555;
+        margin-bottom: 2px;
+        display: block;
+    }
+
+    .detail-value {
+        font-size: 16px;
+        color: #333;
+        font-weight: 500;
+    }
+    
+    /* Loading/Error Message Style */
+    .message-box {
+        text-align: center;
+        padding: 50px;
+        font-size: 18px;
+        color: #555;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        margin-top: 20px;
+    }
+    .error-box {
+        color: #dc3545;
+        border: 1px solid #dc3545;
+    }
+</style>
+</head>
+
+<body>
+<h1 class="h1">Hotel Admin – Room Bookings 🛎️</h1>
+<div id="hotel">
+    <div class="message-box">Loading hotel bookings...</div>
+</div>
+<script>
+    const hotel = document.getElementById("hotel");
+
+    function renderHotel(arr = []) {
+        if (arr.length === 0) {
+            hotel.innerHTML = `<div class="message-box">No hotel bookings found in the database.</div>`;
+            return;
+        }
+
+        hotel.innerHTML = arr.map(b => `
+            <div class='card'>
+                <h2>${b.Name}</h2>
+                <div class='details-container'>
+                    <div class='detail-item'>
+                        <span class='detail-label'>Room Type</span>
+                        <span class='detail-value'>${b.Room_Type || 'N/A'}</span>
+                    </div>
+                    <div class='detail-item'>
+                        <span class='detail-label'>Check-in Date</span>
+                        <span class='detail-value'>${b.CheckIn}</span>
+                    </div>
+                    <div class='detail-item'>
+                        <span class='detail-label'>Check-out Date</span>
+                        <span class='detail-value'>${b.CheckOut}</span>
+                    </div>
+                    <div class='detail-item'>
+                        <span class='detail-label'>Total Days</span>
+                        <span class='detail-value'>${b.Days || '?'}</span>
+                    </div>
+                    <div class='detail-item' style="flex: 1 1 100%;">
+                        <span class='detail-label'>Special Requests</span>
+                        <span class='detail-value'>${b.Special_Requests || 'None'}</span>
+                    </div>
+                </div>
+            </div>`).join('');
+    }
+    
+    // ASYNCHRONOUS DATA RETRIEVAL FUNCTION
+    const retrieveData = async function () {
+        try {
+            hotel.innerHTML = `<div class="message-box">Fetching hotel bookings from server...</div>`;
+            const response = await fetch('http://localhost:3000/adminDetails');
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            
+            // Assuming the actual booking data is inside data.data
+            renderHotel(data.data || []); 
+            
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            hotel.innerHTML = `<div class="message-box error-box">Error loading data. Check the server connection.</div>`;
+        }
+    };
+
+    retrieveData();
+</script>
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Guide Panel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', Arial, sans-serif;
+        }
+
+        body {
+            background: #f7f9fc;
+            padding: 30px
+        }
+
+        .h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #222
+        }
+
+        /* --- Guide Name Display --- */
+        .guide-header {
+            background: #00a2ff;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px 10px 0 0;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .guide-header h1 {
+            font-size: 28px;
+            margin-bottom: 0;
+        }
+
+        /* --- Card Styles --- */
+        .card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            margin-bottom: 20px;
+            border-left: 5px solid #00a2ff; /* Accent bar */
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+        .card h2 {
+            font-size: 20px;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed #eee; /* Light separator */
+        }
+
+        /* --- New Layout for Details using Flexbox --- */
+        .details-flex {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .detail-item {
+            /* Adjusted flex basis for 4 items per row on wider screens, but flexible */
+            flex: 1 1 200px; 
+            padding: 10px;
+            background: #f0f8ff; /* Very light blue background */
+            border-radius: 6px;
+        }
+
+        .detail-item.full-width {
+            flex: 1 1 100%; /* forces this item to take the full width */
+        }
+
+        .detail-label {
+            font-weight: 600;
+            font-size: 13px;
+            color: #555;
+            margin-bottom: 2px;
+            display: block;
+        }
+
+        .detail-value {
+            font-size: 16px;
+            color: #333;
+        }
+
+        /* Loading Indicator Style */
+        .loading-message {
+            text-align: center;
+            padding: 50px;
+            font-size: 18px;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="guide-area">
+        <h1 class="h1">Guide Panel 🧑‍💼</h1>
+        <div class="guide-header">
+            <h1>Assignments for Guide: <span id="guide-name-display"></span></h1>
+        </div>
+        <div id="guide">
+            <div class="loading-message">Loading assignments...</div>
+        </div>
+    </div>
+    <script>
+        const guideName = "Navin.B";
+        const guide = document.getElementById("guide");
+        const guideNameDisplay = document.getElementById("guide-name-display");
+
+        // Display the guide's name in the header
+        guideNameDisplay.textContent = guideName;
+
+        function renderGuide(arr = []) {
+            // Check for the specific guide's name, allowing for case-insensitive matching
+            const assigned = arr.filter(b => b.Guide && b.Guide.trim().toLowerCase() === guideName.trim().toLowerCase());
+
+            if (assigned.length === 0) {
+                guide.innerHTML = `<div class="card" style="text-align: center;">
+                                        <p style="color: #555; font-style: italic;">No bookings currently assigned to ${guideName} or data is unavailable.</p>
+                                    </div>`;
+                return;
+            }
+
+            guide.innerHTML = assigned.map(b => `
+                <div class='card'>
+                    <h2>${b.Name}</h2>
+                    <div class='details-flex'>
+                        <div class='detail-item'>
+                            <span class='detail-label'>Phone</span>
+                            <span class='detail-value'>${b.Phone}</span>
+                        </div>
+                        <div class='detail-item'>
+                            <span class='detail-label'>Room Type</span>
+                            <span class='detail-value'>${b.Room_Type || 'N/A'}</span>
+                        </div>
+                        <div class='detail-item'>
+                            <span class='detail-label'>Check-In</span>
+                            <span class='detail-value'>${b.CheckIn}</span>
+                        </div>
+                        <div class='detail-item'>
+                            <span class='detail-label'>Check-Out</span>
+                            <span class='detail-value'>${b.CheckOut}</span>
+                        </div>
+                        <div class='detail-item full-width'>
+                            <span class='detail-label'>Special Requests</span>
+                            <span class='detail-value'>${b.Special_Requests || 'None'}</span>
+                        </div>
+                    </div>
+                </div>`).join('');
+        }
+        
+        // Asynchronous function to retrieve and render data
+        const retrieveData = async function () {
+            try {
+                // Display loading message while waiting for fetch
+                guide.innerHTML = `<div class="loading-message">Fetching assignments from server...</div>`;
+
+                const response = await fetch('http://localhost:3000/adminDetails');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                
+                // Assuming the actual booking data is inside data.data
+                renderGuide(data.data); 
+                
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                guide.innerHTML = `<div class="card" style="text-align: center; color: red;">
+                                        <p>Error loading data. Check the server connection (http://localhost:3000).</p>
+                                    </div>`;
+            }
+        };
+
+        // Start the data retrieval process
+        retrieveData();
+
+    </script>
+</body>
+</html>
