@@ -4,6 +4,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const env = require('dotenv').config();
+const axios = require('axios');
 
 const server = express();
 const stripe = require('stripe')(process.env.Stripe_Key);
@@ -102,6 +103,26 @@ server.get('/TajMahal/Amenities/Hotel/Form', (req, res) => {
 
 server.get('/TajMahal/Amenities/Hotel/Form/ThankYou',(req,res)=>{
     res.status(200).sendFile(path.join(__dirname,'Thank you.html'));
+});
+
+server.post("/route", async (req, res) => {
+    console.log(req.body);
+    const { source, destination } = req.body;
+
+    const response = await axios.post(
+        "https://api.openrouteservice.org/v2/directions/driving-car/geojson",
+        {
+        coordinates: [source, destination],
+        },
+        {
+        headers: {
+            Authorization: "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6IjA3ZDg0NTZlZDBmZmNkOTgyMTQ0ZTdhMjE5MTVlNGQwNmZjZjkyMjg1OTZkNTk4MjdmYjUzOTQ4IiwiaCI6Im11cm11cjY0In0=",
+        },
+        }
+    );
+
+    res.json(response.data);
+    console.log("Done");
 });
 
 server.post('/TajMahal/Amenities/Hotel/Form', async (req, res) => {
